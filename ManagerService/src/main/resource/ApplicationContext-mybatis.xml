@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+	p:driverClassName="${jdbc.driver}"
+	p:url="${jdbc.url}"
+	p:username="${jdbc.username}"
+	p:password="${jdbc.password}"
+	/>
+	
+	<!-- sqlSessionFactory的配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+	p:dataSource-ref="dataSource"
+	p:configLocation="classpath:mybatis-config.xml"
+	p:mapperLocations="classpath:Mapper/*.xml"
+	/>
+	
+	<!-- mybatis mapper映射 -->
+	<bean id="mapper" class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+	p:sqlSessionFactory-ref="sqlSessionFactory"
+	p:basePackage="Mapper"
+	/>
+</beans>

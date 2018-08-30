@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.ScoreMapper">
+	<resultMap type="model.Score" id="score">
+		<result column="name" jdbcType="VARCHAR" property="name"/>
+		<result column="math" jdbcType="INTEGER" property="math"/>
+		<result column="englis" jdbcType="INTEGER" property="english"/>
+		<result column="physics" jdbcType="INTEGER" property="physics"/>
+	</resultMap>
+	<select id="queryAllScore" resultType="model.Score">
+		SELECT * FROM score_info
+	</select>
+	<select id="queryScoreByName" parameterType="String" resultType="model.Score">
+		SELECT * FROM score_info WHERE name=#{_parameter}
+	</select>
+	<select id="updateScore" parameterType="model.Score">
+		UPDATE score_info SET math=#{math},english=#{english},physics=#{physics} WHERE name=#{name}
+	</select>
+
+</mapper>
